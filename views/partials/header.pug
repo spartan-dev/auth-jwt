@@ -1,0 +1,18 @@
+meta(charset='UTF-8')
+meta(name='viewport' content='width=device-width,initial-scale=1')
+title Document
+link(rel='stylesheet' href='/styles.css')
+nav
+  h1
+    a(href='/') Ninja Smoothies
+  ul
+  #user 
+    if user
+      li.username= `Welcome : ${user.email}`   
+      li
+        a(href='/logout') Log out
+    else
+      li
+        a(href='/login') Log in
+      li
+        a.btn(href='/signup') Sign up  

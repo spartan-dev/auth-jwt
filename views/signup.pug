@@ -1,0 +1,48 @@
+include partials/header.pug
+
+form(action="/signup", method="post") 
+  h2 Sign up
+  label(for="email") email
+  input(type="text" name="email" required)
+  .email.error
+  label(for="password") password
+  input(type="password" name="password" required)
+  .password.error
+  button Sign Up
+
+
+script.
+  const form = document.querySelector('form')
+  const emailError = document.querySelector('.email.error')
+   const passwordError = document.querySelector('.password.error')
+   form.addEventListener('submit', async (e)=>{
+     e.preventDefault()
+     const email = form.email.value
+     const password = form.password.value 
+     //reset de los eror4es
+       emailError.textContent = ''
+       passwordError.textContet = ''
+      
+     try {
+      const res = await fetch('/signup', { 
+        method: 'POST', 
+        body: JSON.stringify({ email, password }),
+        headers: {'Content-Type': 'application/json'}
+      });
+      const data = await res.json();
+      console.log(data);
+      if (data.errors) {
+        emailError.textContent = data.errors.email;
+        passwordError.textContent = data.errors.password;
+      }
+      if(data.user){
+        location.assign("/")
+      }
+    }
+    catch (err) {
+      console.log(err);
+    }
+    
+   })
+  
+include partials/footer.pug
